@@ -475,6 +475,13 @@ body.nav-open {
   margin-top: 0;
 }
 
+.gallery-status {
+  margin: 0 auto;
+  max-width: 36rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
 .gallery-scroller {
   position: relative;
   width: 100vw;

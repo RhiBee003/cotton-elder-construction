@@ -117,6 +117,8 @@
 
   const gallerySection = document.getElementById("gallery-section");
   const galleryGrid = document.getElementById("gallery-grid");
+  const galleryScroller = document.getElementById("gallery-scroller");
+  const galleryStatus = document.getElementById("gallery-status");
 
   function createGalleryCard(item) {
     const figure = document.createElement("figure");
@@ -284,13 +286,23 @@
       if (galleryGrid && gallerySection) {
         galleryGrid.innerHTML = "";
         if (content.gallery.length) {
-          gallerySection.hidden = false;
+          if (galleryStatus) {
+            galleryStatus.hidden = true;
+          }
+          if (galleryScroller) {
+            galleryScroller.hidden = false;
+          }
           content.gallery.forEach(function (item) {
             galleryGrid.appendChild(createGalleryCard(item));
           });
           initGalleryScroller(galleryGrid);
-        } else {
-          gallerySection.hidden = true;
+        } else if (galleryStatus) {
+          galleryStatus.hidden = false;
+          galleryStatus.textContent =
+            "Project photos are being prepared. Check back soon or contact us for recent work examples.";
+          if (galleryScroller) {
+            galleryScroller.hidden = true;
+          }
         }
       }
 
@@ -312,7 +324,11 @@
         });
       }
     } catch (_error) {
-      // Static fallbacks remain if the API is unavailable.
+      if (galleryStatus) {
+        galleryStatus.hidden = false;
+        galleryStatus.textContent =
+          "Unable to load project photos right now. Refresh the page or try again in a moment.";
+      }
     }
   }
 
