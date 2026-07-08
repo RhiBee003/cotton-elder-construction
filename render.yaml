@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: cotton-elder-construction
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STORAGE_PATH
+        value: /var/data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_ACCESS_KEY
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: cotton-elder-data
+      mountPath: /var/data
+      sizeGB: 1

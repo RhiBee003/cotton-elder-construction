@@ -1,0 +1,37 @@
+{
+  "name": "cotton-elder-construction",
+  "version": "1.0.0",
+  "description": "Marketing site and admin panel for Cotton Elder Construction.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "sync-photos": "node scripts/sync-icloud-photos.mjs",
+    "import-photos": "node scripts/import-cec-photos.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RhiBee003/cotton-elder-construction.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/RhiBee003/cotton-elder-construction/issues"
+  },
+  "homepage": "https://github.com/RhiBee003/cotton-elder-construction#readme",
+  "devDependencies": {
+    "playwright-core": "^1.61.1"
+  }
+}

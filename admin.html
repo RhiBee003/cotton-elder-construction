@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CE Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>#admin-view{display:none}body.admin-authed #admin-view{display:block!important}body.admin-authed #login-view{display:none!important}</style>
+</head>
+<body>
+  <div class="admin-shell" id="login-view">
+    <div class="login-wrap">
+      <a class="back-site-btn" href="/">
+        <span class="back-site-icon" aria-hidden="true">←</span>
+        <span>Back to website</span>
+      </a>
+      <form class="login-card" id="login-form">
+      <p class="eyebrow">Cotton Elder</p>
+      <h1>Admin sign in</h1>
+      <p class="login-copy">Manage photos, project titles, and contact requests.</p>
+      <label for="login-email">Email</label>
+      <input id="login-email" name="email" type="email" autocomplete="username" required />
+      <label for="login-password">Password</label>
+      <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+      <button class="btn btn-primary btn-full" type="submit">Sign in</button>
+      <p class="form-error" id="login-error" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-app" id="admin-view">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Site manager</h1>
+      </div>
+      <div class="admin-header-actions">
+        <a class="btn btn-ghost" href="/">View site</a>
+        <button class="btn btn-ghost" type="button" id="logout-btn">Sign out</button>
+      </div>
+    </header>
+
+    <nav class="admin-nav" aria-label="Admin sections">
+      <div class="admin-dropdown" id="admin-dropdown">
+        <button
+          class="admin-dropdown-toggle"
+          type="button"
+          id="admin-dropdown-toggle"
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-controls="admin-dropdown-menu"
+        >
+          <span id="admin-dropdown-label">Photos</span>
+          <span class="admin-dropdown-caret" aria-hidden="true"></span>
+        </button>
+        <div class="admin-dropdown-menu" id="admin-dropdown-menu" role="listbox" hidden>
+          <button class="admin-dropdown-option is-active" type="button" data-tab="photos" role="option">Photos</button>
+          <button class="admin-dropdown-option" type="button" data-tab="inquiries" role="option">
+            Inquiries
+            <span class="badge" id="new-count" hidden>0</span>
+          </button>
+          <button class="admin-dropdown-option" type="button" data-tab="account" role="option">Account</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="admin-panel is-active" id="photos-panel">
+      <div class="panel-block">
+        <div class="panel-head">
+          <h2>Add photos</h2>
+          <p>Drag and drop iPhone photos (HEIC), JPEG, or PNG. New photos go to your library — assign homepage slots below.</p>
+        </div>
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload photos">
+          <input id="file-input" type="file" accept="image/*,.heic,.heif" multiple hidden />
+          <div class="dropzone-icon" aria-hidden="true">+</div>
+          <p class="dropzone-title">Drop photos here or click to browse</p>
+          <p class="dropzone-hint">Multiple files supported · HEIC auto-converted</p>
+        </div>
+        <p class="form-note" id="upload-status"></p>
+      </div>
+
+      <div class="panel-block">
+        <div class="panel-head">
+          <h2>Homepage slots</h2>
+          <p>Hero is the large image beside the headline. Slots 1–3 are the featured projects row.</p>
+        </div>
+        <div class="homepage-slots" id="homepage-slots"></div>
+      </div>
+
+      <div class="panel-block">
+        <div class="panel-head panel-head-row">
+          <div>
+            <h2>Photo library</h2>
+            <p id="library-count">Click any photo to preview full size. Use the dropdown to place it on the site.</p>
+          </div>
+          <div class="library-filters" id="library-filters">
+            <button class="filter-btn is-active" type="button" data-filter="all">All</button>
+            <button class="filter-btn" type="button" data-filter="homepage">Homepage</button>
+            <button class="filter-btn" type="button" data-filter="gallery">Gallery</button>
+          </div>
+        </div>
+        <div class="photo-library" id="photo-library"></div>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="inquiries-panel">
+      <div class="panel-block">
+        <div class="panel-head">
+          <h2>Contact requests</h2>
+          <p>Review messages and open a pre-filled email to respond.</p>
+        </div>
+        <div class="inquiry-list" id="inquiry-list"></div>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="account-panel">
+      <div class="panel-block account-panel-block">
+        <div class="panel-head">
+          <h2>Account settings</h2>
+          <p>Update the email and password used to sign in to this admin panel.</p>
+        </div>
+        <form class="account-form" id="account-form">
+          <label for="account-email">Sign-in email</label>
+          <input id="account-email" name="email" type="email" autocomplete="username" required />
+
+          <label for="account-current-password">Current password</label>
+          <input id="account-current-password" name="current_password" type="password" autocomplete="current-password" required />
+
+          <label for="account-new-password">New password</label>
+          <input id="account-new-password" name="new_password" type="password" autocomplete="new-password" placeholder="Leave blank to keep current password" />
+
+          <button class="btn btn-primary" type="submit">Save account changes</button>
+          <p class="form-note" id="account-status"></p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="photo-lightbox" id="photo-lightbox" hidden>
+    <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Close preview">×</button>
+    <img id="lightbox-image" alt="" />
+    <p id="lightbox-caption"></p>
+  </div>
+
+  <div class="slot-picker" id="slot-picker" hidden>
+    <div class="slot-picker-backdrop" id="slot-picker-backdrop"></div>
+    <div class="slot-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="slot-picker-title">
+      <div class="slot-picker-head">
+        <h3 id="slot-picker-title">Choose a photo</h3>
+        <button class="slot-picker-close" type="button" id="slot-picker-close" aria-label="Close">×</button>
+      </div>
+      <div class="slot-picker-grid" id="slot-picker-grid"></div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
