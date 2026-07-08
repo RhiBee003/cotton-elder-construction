@@ -79,7 +79,14 @@
           </div>
           <p class="gallery-status reveal" id="gallery-status">Loading project photos…</p>
           <div class="gallery-scroller" id="gallery-scroller" hidden>
+            <div class="gallery-glow" id="gallery-glow" aria-hidden="true"></div>
+            <button class="gallery-nav gallery-nav--prev" id="gallery-prev" type="button" aria-label="Previous project photo">‹</button>
+            <button class="gallery-nav gallery-nav--next" id="gallery-next" type="button" aria-label="Next project photo">›</button>
             <div class="gallery-track" id="gallery-grid"></div>
+            <div class="gallery-meta">
+              <p class="gallery-hint" id="gallery-hint">Swipe, drag, or use arrows to explore</p>
+              <p class="gallery-counter" id="gallery-counter" aria-live="polite"></p>
+            </div>
           </div>
         </div>
       </div>
@@ -173,6 +180,17 @@
       <a href="#top">Back to top</a>
     </div>
   </footer>
+
+  <div class="gallery-lightbox" id="gallery-lightbox" hidden aria-hidden="true">
+    <div class="gallery-lightbox-backdrop" data-lightbox-close></div>
+    <button class="gallery-lightbox-close" type="button" data-lightbox-close aria-label="Close gallery">×</button>
+    <button class="gallery-lightbox-nav gallery-lightbox-nav--prev" id="lightbox-prev" type="button" aria-label="Previous photo">‹</button>
+    <figure class="gallery-lightbox-frame">
+      <img id="gallery-lightbox-img" src="" alt="" />
+      <figcaption id="gallery-lightbox-caption"></figcaption>
+    </figure>
+    <button class="gallery-lightbox-nav gallery-lightbox-nav--next" id="lightbox-next" type="button" aria-label="Next photo">›</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
