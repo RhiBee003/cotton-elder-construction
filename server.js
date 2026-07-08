@@ -109,6 +109,47 @@ app.get("/health", function (_req, res) {
   res.json({ ok: true });
 });
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function buildGalleryCardsHtml(gallery) {
+  return gallery
+    .map(function (photo) {
+      const title = escapeHtml(photo.title);
+      const url = escapeHtml(`/uploads/${photo.filename}`);
+      return `<figure class="gallery-card"><img src="${url}" alt="${title}" loading="lazy" decoding="async" /><figcaption>${title}</figcaption></figure>`;
+    })
+    .join("");
+}
+
+function servePublicIndex(_req, res) {
+  const content = getPublicContent(store);
+  let html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
+
+  if (content.gallery.length) {
+    html = html.replace(
+      '<div class="gallery-track" id="gallery-grid"></div>',
+      `<div class="gallery-track" id="gallery-grid">${buildGalleryCardsHtml(content.gallery)}</div>`
+    );
+    html = html.replace('id="gallery-scroller" hidden', 'id="gallery-scroller"');
+    html = html.replace(
+      /<p class="gallery-status reveal" id="gallery-status">[\s\S]*?<\/p>\s*/i,
+      ""
+    );
+  }
+
+  res.set("Cache-Control", "no-cache");
+  res.type("html").send(html);
+}
+
+app.get("/", servePublicIndex);
+app.get("/index.html", servePublicIndex);
+
 app.get("/api/content", function (_req, res) {
   const content = getPublicContent(store);
   res.json({

@@ -475,6 +475,15 @@ body.nav-open {
   margin-top: 0;
 }
 
+.gallery-page-section {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  overflow: visible;
+}
+
+.gallery-page-section .container {
+  overflow: visible;
+}
+
 .gallery-status {
   margin: 0 auto;
   max-width: 36rem;
@@ -487,8 +496,9 @@ body.nav-open {
   width: 100vw;
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
-  overflow: hidden;
+  overflow: visible;
   perspective: 1400px;
+  min-height: 20rem;
   mask-image: linear-gradient(
     to right,
     transparent,
@@ -503,6 +513,10 @@ body.nav-open {
     #000 95%,
     transparent
   );
+}
+
+.gallery-scroller[hidden] {
+  display: none !important;
 }
 
 .gallery-track {
@@ -536,13 +550,13 @@ body.nav-open {
   cursor: pointer;
   transform-style: preserve-3d;
   transform-origin: 50% 50%;
-  filter: blur(var(--stack-blur, 10px));
-  opacity: var(--stack-opacity, 0.55);
+  filter: blur(var(--stack-blur, 4px));
+  opacity: var(--stack-opacity, 0.72);
   transform:
-    translateZ(var(--stack-translate-z, -48px))
+    translateZ(var(--stack-translate-z, -24px))
     rotateY(var(--stack-rotate-y, 0deg))
     rotateZ(var(--stack-rotate-z, 0deg))
-    scale(var(--stack-scale, 0.82));
+    scale(var(--stack-scale, 0.9));
   transition:
     filter 0.55s ease,
     opacity 0.55s ease,

@@ -273,6 +273,21 @@
     document.body.appendChild(link);
   }
 
+  function initGalleryIfReady() {
+    if (!galleryGrid || !galleryGrid.querySelector(".gallery-card")) {
+      return;
+    }
+    if (galleryStatus) {
+      galleryStatus.hidden = true;
+    }
+    if (galleryScroller) {
+      galleryScroller.hidden = false;
+    }
+    initGalleryScroller(galleryGrid);
+  }
+
+  initGalleryIfReady();
+
   async function loadSiteContent() {
     try {
       const response = await fetch("/api/content");
@@ -284,19 +299,24 @@
       mountAdminStar(content.adminPath);
 
       if (galleryGrid && gallerySection) {
-        galleryGrid.innerHTML = "";
+        const hasExistingCards = galleryGrid.querySelector(".gallery-card");
+        if (!hasExistingCards) {
+          galleryGrid.innerHTML = "";
+        }
         if (content.gallery.length) {
+          if (!hasExistingCards) {
+            content.gallery.forEach(function (item) {
+              galleryGrid.appendChild(createGalleryCard(item));
+            });
+          }
           if (galleryStatus) {
             galleryStatus.hidden = true;
           }
           if (galleryScroller) {
             galleryScroller.hidden = false;
           }
-          content.gallery.forEach(function (item) {
-            galleryGrid.appendChild(createGalleryCard(item));
-          });
           initGalleryScroller(galleryGrid);
-        } else if (galleryStatus) {
+        } else if (!hasExistingCards && galleryStatus) {
           galleryStatus.hidden = false;
           galleryStatus.textContent =
             "Project photos are being prepared. Check back soon or contact us for recent work examples.";
@@ -324,7 +344,7 @@
         });
       }
     } catch (_error) {
-      if (galleryStatus) {
+      if (!galleryGrid?.querySelector(".gallery-card") && galleryStatus) {
         galleryStatus.hidden = false;
         galleryStatus.textContent =
           "Unable to load project photos right now. Refresh the page or try again in a moment.";
