@@ -24,48 +24,11 @@ Copy `.env.example` to `.env` to customize the admin account, access key, and se
 
 ## Deploy on Render
 
-This repo includes a [`render.yaml`](render.yaml) blueprint for one-click deploy.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/RhiBee003/cotton-elder-construction)
 
-### Option A — Blueprint (recommended)
+One-click deploy (free tier). When prompted, set `ADMIN_EMAIL` and `ADMIN_PASSWORD`.
 
-1. Push this repo to GitHub.
-2. In [Render](https://render.com), click **New → Blueprint**.
-3. Connect the `cotton-elder-construction` repository.
-4. When prompted, set:
-   - `ADMIN_EMAIL` — admin sign-in email
-   - `ADMIN_PASSWORD` — admin sign-in password (8+ characters)
-5. Click **Apply**. Render creates the web service with a **1 GB persistent disk** so photos and contact submissions survive redeploys.
-
-After deploy:
-
-- Public site: `https://your-service.onrender.com`
-- Admin panel: `https://your-service.onrender.com/YOUR_ADMIN_ACCESS_KEY`  
-  Find `ADMIN_ACCESS_KEY` in the service **Environment** tab (auto-generated unless you set one).
-
-### Option B — Manual web service
-
-1. **New → Web Service** → connect this repo.
-2. Settings:
-   - **Build command:** `npm install`
-   - **Start command:** `npm start`
-   - **Health check path:** `/health`
-3. Add a **Persistent Disk** (1 GB) mounted at `/var/data`.
-4. Environment variables:
-
-| Key | Value |
-|-----|--------|
-| `NODE_ENV` | `production` |
-| `STORAGE_PATH` | `/var/data` |
-| `SESSION_SECRET` | long random string |
-| `ADMIN_ACCESS_KEY` | secret URL path for admin |
-| `ADMIN_EMAIL` | your admin email |
-| `ADMIN_PASSWORD` | your admin password |
-
-### Notes for production
-
-- `data/` and `uploads/` must live on the persistent disk (`STORAGE_PATH=/var/data`) or they reset on each deploy.
-- HEIC upload conversion uses macOS `sips` locally; on Render use JPEG or PNG.
-- Seed photos in `images/` are copied into storage on first run if the database is empty.
+After deploy, your site will be at `https://cotton-elder-construction.onrender.com`.
 
 ## Customize
 
